@@ -1,0 +1,28 @@
+{
+  "name": "candidate-recommendation-engine",
+  "version": "1.0.0",
+  "description": "AI-powered candidate recommendation engine with Flask backend and React frontend",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "start": "python run.py"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rishi6277006/candidate-recommendation-engine.git"
+  },
+  "keywords": [
+    "ai",
+    "candidate",
+    "recommendation",
+    "flask",
+    "react",
+    "nlp",
+    "tf-idf"
+  ],
+  "author": "Rishikesh Thakker",
+  "license": "MIT"
+} 
