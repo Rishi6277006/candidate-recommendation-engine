@@ -1,0 +1,158 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  padding-top: 80px;
+}
+
+.main-content {
+  padding: 40px 0;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 40px;
+}
+
+.job-description-section,
+.upload-section {
+  height: fit-content;
+}
+
+.section-description {
+  color: #666;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.job-description-textarea {
+  width: 100%;
+  min-height: 300px;
+  padding: 16px;
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+.job-description-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  background: white;
+}
+
+.job-description-textarea::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.analyze-section {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.analyze-btn {
+  font-size: 18px;
+  padding: 16px 32px;
+  min-width: 200px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.analyze-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  margin: 20px 0;
+}
+
+.error-card {
+  background: rgba(255, 99, 71, 0.1);
+  border: 1px solid rgba(255, 99, 71, 0.3);
+  color: #d32f2f;
+}
+
+.error-card p {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .job-description-textarea {
+    min-height: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    padding-top: 60px;
+  }
+  
+  .main-content {
+    padding: 20px 0;
+  }
+  
+  .content-grid {
+    gap: 20px;
+  }
+  
+  .analyze-btn {
+    font-size: 16px;
+    padding: 14px 28px;
+    min-width: 180px;
+  }
+  
+  .job-description-textarea {
+    min-height: 200px;
+    padding: 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 12px;
+  }
+  
+  .analyze-btn {
+    width: 100%;
+    justify-content: center;
+  }
+} 
