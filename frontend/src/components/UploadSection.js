@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
-import { FiUpload, FiFile, FiX } from 'react-icons/fi';
+import { FiUpload, FiX } from 'react-icons/fi';
 import './UploadSection.css';
 
 const UploadSection = ({ onFileUpload, uploadedFiles }) => {

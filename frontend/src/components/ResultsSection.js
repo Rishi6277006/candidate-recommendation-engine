@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiChevronDown, FiChevronUp, FiStar, FiUser, FiBriefcase, FiCode } from 'react-icons/fi';
+import { FiChevronDown, FiChevronUp, FiBriefcase, FiCode } from 'react-icons/fi';
 import './ResultsSection.css';
 
 const ResultsSection = ({ results }) => {
