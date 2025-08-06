@@ -336,17 +336,71 @@ def ping():
 def serve_frontend():
     """Serve the React frontend"""
     try:
-        return send_from_directory('frontend/build', 'index.html')
-    except:
-        return jsonify({'message': 'Frontend not available', 'api_status': 'healthy'})
+        # Debug: Check if build directory exists
+        import os
+        build_path = 'frontend/build'
+        if os.path.exists(build_path):
+            print(f"Build directory exists: {build_path}")
+            if os.path.exists(os.path.join(build_path, 'index.html')):
+                print("index.html found")
+                return send_from_directory(build_path, 'index.html')
+            else:
+                print("index.html not found")
+        else:
+            print(f"Build directory does not exist: {build_path}")
+        
+        # Fallback to simple HTML
+    except Exception as e:
+        # Fallback to a simple HTML page if build files are not available
+        return f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>AI Candidate Recommendation Engine</title>
+            <style>
+                body {{ font-family: Arial, sans-serif; margin: 40px; }}
+                .container {{ max-width: 800px; margin: 0 auto; }}
+                .api-status {{ background: #f0f0f0; padding: 20px; border-radius: 8px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>🎯 AI Candidate Recommendation Engine</h1>
+                <p>The application is running successfully!</p>
+                <div class="api-status">
+                    <h3>API Endpoints:</h3>
+                    <ul>
+                        <li><strong>Health Check:</strong> <a href="/ping">/ping</a></li>
+                        <li><strong>API Health:</strong> <a href="/api/health">/api/health</a></li>
+                    </ul>
+                </div>
+                <p><em>Frontend build files are not available. The backend API is working correctly.</em></p>
+            </div>
+        </body>
+        </html>
+        """
 
 @app.route('/<path:path>')
 def serve_static(path):
     """Serve static files"""
     try:
         return send_from_directory('frontend/build', path)
-    except:
-        return jsonify({'error': 'File not found'}), 404
+    except Exception as e:
+        # Return a more helpful error for missing static files
+        if path.startswith('static/'):
+            return f"""
+            <!DOCTYPE html>
+            <html>
+            <head><title>Static File Not Found</title></head>
+            <body>
+                <h1>Static file not found: {path}</h1>
+                <p>The React build files may not be available in production.</p>
+                <p><a href="/">← Back to Home</a></p>
+            </body>
+            </html>
+            """, 404
+        else:
+            return jsonify({'error': 'File not found'}), 404
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001) 
