@@ -327,6 +327,11 @@ def simple_health():
     """Simple health check endpoint"""
     return jsonify({'status': 'ok'})
 
+@app.route('/ping', methods=['GET'])
+def ping():
+    """Ping endpoint for health checks"""
+    return 'pong'
+
 @app.route('/')
 def serve_frontend():
     """Serve the React frontend"""
