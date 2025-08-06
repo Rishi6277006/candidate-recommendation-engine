@@ -280,7 +280,7 @@ def analyze_candidates():
             return jsonify({'error': 'At least one resume file is required'}), 400
         
         # Process files
-            resumes = []
+        resumes = []
         for file_data in files_data:
             filename = file_data.get('name', 'Unknown')
             file_type = file_data.get('type', '')
