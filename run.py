@@ -14,12 +14,12 @@ def main():
     """Main function to run the Flask application"""
     
     # Set Flask environment
-    os.environ['FLASK_ENV'] = 'development'
+    os.environ['FLASK_ENV'] = 'production'
     
     # Configuration
     host = os.environ.get('HOST', '0.0.0.0')
     port = int(os.environ.get('PORT', 5001))  # Changed from 5000 to 5001
-    debug = os.environ.get('DEBUG', 'True').lower() == 'true'
+    debug = os.environ.get('DEBUG', 'False').lower() == 'true'
     
     print("🚀 Starting AI Candidate Recommendation Engine")
     print(f"📍 Backend URL: http://{host}:{port}")
