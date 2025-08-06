@@ -21,6 +21,15 @@ print("Using TF-IDF embeddings and cosine similarity for candidate analysis...")
 app = Flask(__name__)
 CORS(app)
 
+# Basic error handling for app initialization
+@app.errorhandler(500)
+def internal_error(error):
+    return jsonify({'error': 'Internal server error'}), 500
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return jsonify({'error': 'Not found'}), 404
+
 # Initialize TF-IDF vectorizer for embeddings
 vectorizer = TfidfVectorizer(
     max_features=10000, # Increased to capture more vocabulary
@@ -312,6 +321,11 @@ def health_check():
         'message': 'AI Candidate Recommendation Engine is running',
         'timestamp': '2025-08-05'
     })
+
+@app.route('/health', methods=['GET'])
+def simple_health():
+    """Simple health check endpoint"""
+    return jsonify({'status': 'ok'})
 
 @app.route('/')
 def serve_frontend():
