@@ -18,7 +18,7 @@ import re
 
 print("Using TF-IDF embeddings and cosine similarity for candidate analysis...")
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='frontend/build', static_url_path='')
 CORS(app)
 
 # Basic error handling for app initialization
@@ -416,37 +416,7 @@ def serve_frontend():
         print(f"Error serving frontend: {e}")
         return jsonify({'error': 'Frontend not available', 'api_status': 'healthy'})
 
-@app.route('/<path:path>')
-def serve_static(path):
-    """Serve static files"""
-    try:
-        import os
-        build_path = 'frontend/build'
-        file_path = os.path.join(build_path, path)
-        
-        if os.path.exists(file_path):
-            print(f"Serving static file: {path}")
-            return send_from_directory(build_path, path)
-        else:
-            print(f"Static file not found: {path}")
-            # Return a more helpful error for missing static files
-            if path.startswith('static/'):
-                return f"""
-                <!DOCTYPE html>
-                <html>
-                <head><title>Static File Not Found</title></head>
-                <body>
-                    <h1>Static file not found: {path}</h1>
-                    <p>The React build files may not be available in production.</p>
-                    <p><a href="/">← Back to Home</a></p>
-                </body>
-                </html>
-                """, 404
-            else:
-                return jsonify({'error': 'File not found'}), 404
-    except Exception as e:
-        print(f"Error serving static file {path}: {e}")
-        return jsonify({'error': 'File not found'}), 404
+# Flask will automatically serve static files from frontend/build directory
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001) 
