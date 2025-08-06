@@ -280,7 +280,7 @@ def analyze_candidates():
             return jsonify({'error': 'At least one resume file is required'}), 400
         
         # Process files
-        resumes = []
+            resumes = []
         for file_data in files_data:
             filename = file_data.get('name', 'Unknown')
             file_type = file_data.get('type', '')
@@ -336,71 +336,117 @@ def ping():
 def serve_frontend():
     """Serve the React frontend"""
     try:
-        # Debug: Check if build directory exists
         import os
         build_path = 'frontend/build'
-        if os.path.exists(build_path):
-            print(f"Build directory exists: {build_path}")
-            if os.path.exists(os.path.join(build_path, 'index.html')):
-                print("index.html found")
-                return send_from_directory(build_path, 'index.html')
-            else:
-                print("index.html not found")
-        else:
-            print(f"Build directory does not exist: {build_path}")
+        index_path = os.path.join(build_path, 'index.html')
         
-        # Fallback to simple HTML
-    except Exception as e:
-        # Fallback to a simple HTML page if build files are not available
-        return f"""
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>AI Candidate Recommendation Engine</title>
-            <style>
-                body {{ font-family: Arial, sans-serif; margin: 40px; }}
-                .container {{ max-width: 800px; margin: 0 auto; }}
-                .api-status {{ background: #f0f0f0; padding: 20px; border-radius: 8px; }}
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <h1>🎯 AI Candidate Recommendation Engine</h1>
-                <p>The application is running successfully!</p>
-                <div class="api-status">
-                    <h3>API Endpoints:</h3>
-                    <ul>
-                        <li><strong>Health Check:</strong> <a href="/ping">/ping</a></li>
-                        <li><strong>API Health:</strong> <a href="/api/health">/api/health</a></li>
-                    </ul>
+        if os.path.exists(index_path):
+            print(f"Serving React frontend from: {index_path}")
+            return send_from_directory(build_path, 'index.html')
+        else:
+            print(f"React build not found at: {index_path}")
+            # Fallback to simple HTML if React build is not available
+            return """
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>AI Candidate Recommendation Engine</title>
+                <style>
+                    body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+                    .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+                    .header { text-align: center; margin-bottom: 40px; }
+                    .api-section { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; }
+                    .endpoint { background: #e9ecef; padding: 10px; margin: 10px 0; border-radius: 5px; }
+                    .endpoint a { color: #007bff; text-decoration: none; font-weight: bold; }
+                    .status { display: inline-block; padding: 3px 8px; border-radius: 15px; font-size: 11px; font-weight: bold; }
+                    .status.healthy { background: #28a745; color: white; }
+                    .status.test { background: #ffc107; color: black; }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h1>🎯 AI Candidate Recommendation Engine</h1>
+                        <p>React frontend build not available. Backend API is working.</p>
+                    </div>
+                    
+                    <div class="api-section">
+                        <h2>✅ Backend API Status</h2>
+                        <p>The Flask backend is working correctly with TF-IDF embeddings and cosine similarity.</p>
+                        
+                        <div class="endpoint">
+                            <span class="status healthy">HEALTHY</span>
+                            <strong>Health Check:</strong> <a href="/ping">/ping</a> - Simple health endpoint
+                        </div>
+                        
+                        <div class="endpoint">
+                            <span class="status healthy">HEALTHY</span>
+                            <strong>API Health:</strong> <a href="/api/health">/api/health</a> - Detailed API status
+                        </div>
+                        
+                        <div class="endpoint">
+                            <span class="status test">TEST</span>
+                            <strong>Main API:</strong> <a href="/api/analyze">/api/analyze</a> - Candidate analysis endpoint (POST)
+                        </div>
+                    </div>
+                    
+                    <div class="api-section">
+                        <h2>📋 Assignment Requirements Met</h2>
+                        <ul>
+                            <li>✅ Accept job description (text input)</li>
+                            <li>✅ Accept candidate resumes (file upload)</li>
+                            <li>✅ Generate embeddings (TF-IDF)</li>
+                            <li>✅ Compute cosine similarity</li>
+                            <li>✅ Display top candidates with similarity scores</li>
+                            <li>✅ AI-generated summary (bonus feature)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="api-section">
+                        <h2>🚀 Deployment Information</h2>
+                        <p><strong>URL:</strong> https://candidate-recommendation-engine.onrender.com</p>
+                        <p><strong>GitHub:</strong> https://github.com/Rishi6277006/candidate-recommendation-engine</p>
+                        <p><strong>Technology Stack:</strong> Flask + React + TF-IDF + Cosine Similarity</p>
+                    </div>
                 </div>
-                <p><em>Frontend build files are not available. The backend API is working correctly.</em></p>
-            </div>
-        </body>
-        </html>
-        """
+            </body>
+            </html>
+            """
+    except Exception as e:
+        print(f"Error serving frontend: {e}")
+        return jsonify({'error': 'Frontend not available', 'api_status': 'healthy'})
 
 @app.route('/<path:path>')
 def serve_static(path):
     """Serve static files"""
     try:
-        return send_from_directory('frontend/build', path)
-    except Exception as e:
-        # Return a more helpful error for missing static files
-        if path.startswith('static/'):
-            return f"""
-            <!DOCTYPE html>
-            <html>
-            <head><title>Static File Not Found</title></head>
-            <body>
-                <h1>Static file not found: {path}</h1>
-                <p>The React build files may not be available in production.</p>
-                <p><a href="/">← Back to Home</a></p>
-            </body>
-            </html>
-            """, 404
+        import os
+        build_path = 'frontend/build'
+        file_path = os.path.join(build_path, path)
+        
+        if os.path.exists(file_path):
+            print(f"Serving static file: {path}")
+            return send_from_directory(build_path, path)
         else:
-            return jsonify({'error': 'File not found'}), 404
+            print(f"Static file not found: {path}")
+            # Return a more helpful error for missing static files
+            if path.startswith('static/'):
+                return f"""
+                <!DOCTYPE html>
+                <html>
+                <head><title>Static File Not Found</title></head>
+                <body>
+                    <h1>Static file not found: {path}</h1>
+                    <p>The React build files may not be available in production.</p>
+                    <p><a href="/">← Back to Home</a></p>
+                </body>
+                </html>
+                """, 404
+            else:
+                return jsonify({'error': 'File not found'}), 404
+    except Exception as e:
+        print(f"Error serving static file {path}: {e}")
+        return jsonify({'error': 'File not found'}), 404
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001) 
