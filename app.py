@@ -18,7 +18,7 @@ import re
 
 print("Using TF-IDF embeddings and cosine similarity for candidate analysis...")
 
-app = Flask(__name__, static_folder='frontend/build', static_url_path='')
+app = Flask(__name__)
 CORS(app)
 
 # Initialize TF-IDF vectorizer for embeddings
@@ -301,17 +301,35 @@ def analyze_candidates():
 @app.route('/api/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""
-    return jsonify({'status': 'healthy', 'model_loaded': True})
+    try:
+        # Test if the engine is working
+        test_result = engine.analyze_candidates("test job", [("test", "test resume")])
+        return jsonify({
+            'status': 'healthy', 
+            'model_loaded': True,
+            'engine_working': len(test_result) > 0
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'unhealthy',
+            'error': str(e)
+        }), 500
 
 @app.route('/')
 def serve_frontend():
     """Serve the React frontend"""
-    return send_from_directory(app.static_folder, 'index.html')
+    try:
+        return send_from_directory('frontend/build', 'index.html')
+    except:
+        return jsonify({'message': 'Frontend not available', 'api_status': 'healthy'})
 
 @app.route('/<path:path>')
 def serve_static(path):
     """Serve static files"""
-    return send_from_directory(app.static_folder, path)
+    try:
+        return send_from_directory('frontend/build', path)
+    except:
+        return jsonify({'error': 'File not found'}), 404
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001) 
