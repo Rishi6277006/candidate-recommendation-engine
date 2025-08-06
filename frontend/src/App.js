@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import UploadSection from './components/UploadSection';
@@ -184,6 +185,7 @@ function App() {
           </div>
         </section>
       </main>
+      <Analytics />
     </div>
   );
 }
