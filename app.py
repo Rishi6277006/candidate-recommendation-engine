@@ -368,7 +368,7 @@ def serve_frontend():
                     <div class="header">
                         <h1>🎯 AI Candidate Recommendation Engine</h1>
                         <p>React frontend build not available. Backend API is working.</p>
-                    </div>
+            </div>
                     
                     <div class="api-section">
                         <h2>✅ Backend API Status</h2>
@@ -382,7 +382,7 @@ def serve_frontend():
                         <div class="endpoint">
                             <span class="status healthy">HEALTHY</span>
                             <strong>API Health:</strong> <a href="/api/health">/api/health</a> - Detailed API status
-                        </div>
+                    </div>
                         
                         <div class="endpoint">
                             <span class="status test">TEST</span>

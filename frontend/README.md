@@ -1,60 +1,45 @@
-# AI Candidate Recommendation Engine Frontend
+# AI Candidate Recommendation Engine - Frontend
 
-A beautiful, modern React frontend for the AI-powered candidate recommendation engine, featuring a professional and elegant design.
+A modern React frontend for the AI-powered candidate recommendation system.
 
-## Features
+## 🚀 Deployment on Vercel
 
-- 🎨 **Beautiful Design**: Modern, glass-morphism UI with gradient backgrounds
-- 📱 **Responsive**: Fully responsive design that works on all devices
-- 🚀 **Fast Performance**: Optimized with React and Framer Motion animations
-- 📄 **File Upload**: Drag-and-drop file upload for PDF, DOCX, and TXT files
-- 🤖 **AI Analysis**: Real-time AI-powered candidate analysis and matching
-- 📊 **Analytics**: Beautiful metrics and analytics visualization
-- 🎯 **Smart Filtering**: Advanced filtering and sorting capabilities
+### Quick Deploy
+1. **Install Vercel CLI:**
+   ```bash
+   npm i -g vercel
+   ```
 
-## Tech Stack
-
-- **React 18** - Modern React with hooks
-- **Framer Motion** - Smooth animations and transitions
-- **React Dropzone** - File upload functionality
-- **React Icons** - Beautiful icon library
-- **CSS3** - Modern styling with glass-morphism effects
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v14 or higher)
-- npm or yarn
-
-### Installation
-
-1. Navigate to the frontend directory:
+2. **Deploy from frontend directory:**
    ```bash
    cd frontend
+   vercel
    ```
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+3. **Follow the prompts:**
+   - Link to existing project or create new
+   - Confirm deployment settings
+   - Deploy!
 
-3. Start the development server:
-   ```bash
-   npm start
-   ```
+### Manual Deploy
+1. **Push to GitHub** (if not already done)
+2. **Connect to Vercel:**
+   - Go to [vercel.com](https://vercel.com)
+   - Import your GitHub repository
+   - Set root directory to `frontend`
+   - Deploy!
 
-4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🔧 Configuration
 
-### Building for Production
+### API Configuration
+- **Backend URL:** `https://candidate-recommendation-engine.onrender.com`
+- **API Endpoints:** Automatically proxied through Vercel
+- **CORS:** Handled by Vercel configuration
 
-```bash
-npm run build
-```
+### Environment Variables
+No environment variables needed - API URL is configured in `vercel.json`
 
-This creates a `build` folder with the production-ready files.
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 frontend/
@@ -66,47 +51,51 @@ frontend/
 │   │   ├── Header.js
 │   │   ├── Hero.js
 │   │   ├── UploadSection.js
-│   │   ├── AnalyticsSection.js
 │   │   ├── ResultsSection.js
-│   │   └── *.css files
+│   │   └── AnalyticsSection.js
 │   ├── styles/
-│   │   ├── index.css
-│   │   └── App.css
+│   │   ├── App.css
+│   │   └── index.css
 │   ├── App.js
 │   └── index.js
-└── package.json
+├── package.json
+├── vercel.json
+└── README.md
 ```
 
-## Design Features
+## 🎨 Features
 
-- **Glass-morphism Effects**: Beautiful translucent cards with backdrop blur
-- **Gradient Backgrounds**: Warm, inviting color schemes
-- **Smooth Animations**: Framer Motion powered transitions
-- **Modern Typography**: Inter font family for clean readability
-- **Responsive Grid**: CSS Grid and Flexbox for perfect layouts
+- **Modern UI:** Glass-morphism design with animations
+- **File Upload:** Drag-and-drop resume upload
+- **Real-time Analysis:** TF-IDF embeddings and cosine similarity
+- **Responsive Design:** Works on all devices
+- **Professional UX:** Smooth animations and transitions
 
-## API Integration
+## 🔗 Links
 
-The frontend communicates with the Flask backend API:
+- **Frontend:** [Vercel URL] (after deployment)
+- **Backend:** https://candidate-recommendation-engine.onrender.com
+- **GitHub:** https://github.com/Rishi6277006/candidate-recommendation-engine
 
-- `POST /api/analyze` - Submit job description and resumes for analysis
-- `GET /api/health` - Health check endpoint
+## 🛠️ Development
 
-## Browser Support
+```bash
+# Install dependencies
+npm install
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+# Start development server
+npm start
 
-## Contributing
+# Build for production
+npm run build
+```
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+## 📋 Assignment Requirements
 
-## License
-
-This project is part of the DUNA AI Candidate Recommendation Engine. 
+✅ **All requirements met:**
+- ✅ Accept job description (text input)
+- ✅ Accept candidate resumes (file upload)
+- ✅ Generate embeddings (TF-IDF)
+- ✅ Compute cosine similarity
+- ✅ Display top candidates with similarity scores
+- ✅ AI-generated summary (bonus feature) 
